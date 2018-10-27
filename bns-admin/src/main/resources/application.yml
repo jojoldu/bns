@@ -1,0 +1,39 @@
+spring:
+  profiles:
+    active: local
+  session:
+    store-type: jdbc
+    jdbc:
+      table-name: SPRING_SESSION
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+logging.path: logs/bns-admin/
+
+server:
+  port: 9200
+
+---
+spring:
+  profiles: local
+  jpa:
+    database-platform: H2
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    platform: h2
+    hikari:
+      jdbc-url: jdbc:h2:mem://localhost/~/testdb;MVCC=TRUE
+      username: sa
+      password:
+      driver-class-name: org.h2.Driver
+
+  h2:
+    console.enabled: true
+    console.path: /h2-console #접속 URL -> jdbc:h2:mem:bns, ID:sa, PW: (EMPTY)
+    console.settings.trace: false

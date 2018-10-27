@@ -84,12 +84,6 @@ subprojects {
             xml.enabled = true // required by coveralls
         }
     }
-
-    dependencyManagement {
-        imports {
-            mavenBom 'org.springframework.cloud:spring-cloud-aws:2.0.0.RELEASE'
-        }
-    }
 }
 
 task jacocoRootReport(type: JacocoReport) {
