@@ -10,6 +10,7 @@ public class AdminApplication {
     public static final String APPLICATION_LOCATIONS = "spring.config.location="
             + "classpath:aws.yml,"
             + "classpath:bitly.yml,"
+            + "classpath:facebook.yml,"
             + "classpath:application.yml,"
             + "/app/config/dev-beginner-group-common/real-db-application.yml";
 

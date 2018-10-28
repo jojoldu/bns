@@ -18,8 +18,11 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilt
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
+import org.springframework.web.filter.CompositeFilter;
 
 import javax.servlet.Filter;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.util.Collections.singletonList;
 /**
@@ -34,18 +37,33 @@ import static java.util.Collections.singletonList;
 public class OAuthConfig {
 
     private final OAuth2ClientContext oauth2ClientContext;
-    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    private final BitlyAuthenticationSuccessHandler customAuthenticationSuccessHandler;
     private final MemberRepository memberRepository;
 
     @Bean
     public Filter ssoFilter() {
-        OAuth2ClientAuthenticationProcessingFilter oauth2Filter = new OAuth2ClientAuthenticationProcessingFilter("/login");
-        oauth2Filter.setRestTemplate(new OAuth2RestTemplate(bitlyClient(), oauth2ClientContext));
-        UserInfoTokenServices tokenServices = new UserInfoTokenServices(bitlyResource().getUserInfoUri(), bitlyClient().getClientId());
-        tokenServices.setAuthoritiesExtractor(authoritiesExtractor());
-        oauth2Filter.setTokenServices(tokenServices);
-        oauth2Filter.setAuthenticationSuccessHandler(customAuthenticationSuccessHandler);
-        return oauth2Filter;
+        CompositeFilter filter = new CompositeFilter();
+        List<Filter> filters = new ArrayList<>();
+
+        OAuth2ClientAuthenticationProcessingFilter facebookFilter = new OAuth2ClientAuthenticationProcessingFilter("/login/facebook");
+        OAuth2RestTemplate facebookTemplate = new OAuth2RestTemplate(facebook(), oauth2ClientContext);
+        facebookFilter.setRestTemplate(facebookTemplate);
+        UserInfoTokenServices facebookTokenServices = new UserInfoTokenServices(facebookResource().getUserInfoUri(), facebook().getClientId());
+        facebookTokenServices.setRestTemplate(facebookTemplate);
+        facebookFilter.setTokenServices(facebookTokenServices);
+        facebookFilter.setAuthenticationSuccessHandler(customAuthenticationSuccessHandler);
+        filters.add(facebookFilter);
+
+        OAuth2ClientAuthenticationProcessingFilter bitlyFilter = new OAuth2ClientAuthenticationProcessingFilter("/login");
+        bitlyFilter.setRestTemplate(new OAuth2RestTemplate(bitlyClient(), oauth2ClientContext));
+        UserInfoTokenServices bitlyTokenServices = new UserInfoTokenServices(bitlyResource().getUserInfoUri(), bitlyClient().getClientId());
+        bitlyTokenServices.setAuthoritiesExtractor(authoritiesExtractor());
+        bitlyFilter.setTokenServices(bitlyTokenServices);
+        bitlyFilter.setAuthenticationSuccessHandler(customAuthenticationSuccessHandler);
+        filters.add(bitlyFilter);
+
+        filter.setFilters(filters);
+        return filter;
     }
 
     /**
@@ -60,6 +78,18 @@ public class OAuthConfig {
                     .orElse(Role.GUEST.getAuthority());
             return singletonList(authority);
         };
+    }
+
+    @Bean
+    @ConfigurationProperties("facebook.client")
+    public AuthorizationCodeResourceDetails facebook() {
+        return new AuthorizationCodeResourceDetails();
+    }
+
+    @Bean
+    @ConfigurationProperties("facebook.resource")
+    public ResourceServerProperties facebookResource() {
+        return new ResourceServerProperties();
     }
 
     @Bean

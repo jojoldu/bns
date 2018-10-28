@@ -17,9 +17,16 @@ logging.path: logs/bns-admin/
 server:
   port: 9200
 
+url:
+  bitly:
+    create: https://api-ssl.bitly.com/v4/bitlinks
+    metrics: https://api-ssl.bitly.com/v4/bitlinks/{bitlink}/clicks/summary
 ---
 spring:
   profiles: local
+  devtools:
+    livereload:
+      enabled: true
   jpa:
     database-platform: H2
     show-sql: true

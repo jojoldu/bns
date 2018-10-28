@@ -1,8 +1,8 @@
 package com.jojoldu.bns.admin.config.oauth;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jojoldu.bns.admin.config.oauth.dto.BitlyAuthDto;
 import com.jojoldu.bns.admin.config.oauth.dto.SessionUser;
+import com.jojoldu.bns.admin.domain.FacebookRepository;
 import com.jojoldu.bns.admin.domain.Member;
 import com.jojoldu.bns.admin.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,13 +25,15 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Component
-public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class FacebookAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     private final MemberRepository memberRepository;
+    private final FacebookRepository facebookRepository;
     private final HttpSession httpSession;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+        Member member = findMember();
 
         BitlyAuthDto authDto = BitlyAuthDto.of(authentication);
         saveOrRefresh(authDto);
@@ -39,10 +41,16 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         response.sendRedirect("/");
     }
 
+    private Member findMember() {
+        SessionUser sessionUser = (SessionUser) httpSession.getAttribute(SessionUser.SESSION_KEY);
+        return memberRepository.findByEmail(sessionUser.getEmail())
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 유저로 요청중입니다."));
+    }
+
     private void saveOrRefresh(BitlyAuthDto dto) {
         Optional<Member> optional = memberRepository.findByUsername(dto.getLogin());
 
-        if(optional.isPresent()){
+        if (optional.isPresent()) {
             Member entity = optional.get();
             entity.refreshToken(dto.getAccessToken());
             memberRepository.save(entity);
