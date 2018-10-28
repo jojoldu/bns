@@ -2,7 +2,11 @@
 /build/
 !gradle/wrapper/gradle-wrapper.jar
 bitly.yml
+facebook.yml
 aws.yml
+*.log
+bitly-token.http
+logs
 
 ### STS ###
 .apt_generated
