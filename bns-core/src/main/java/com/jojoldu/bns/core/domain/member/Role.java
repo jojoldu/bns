@@ -1,9 +1,7 @@
-package com.jojoldu.bns.admin.domain;
+package com.jojoldu.bns.core.domain.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 /**
  * Created by jojoldu@gmail.com on 2018. 10. 27.
@@ -23,7 +21,5 @@ public enum Role {
     private String key;
     private String title;
 
-    public GrantedAuthority getAuthority() {
-        return new SimpleGrantedAuthority(key);
-    }
+
 }

@@ -1,7 +1,7 @@
 package com.jojoldu.bns.admin.config.oauth.dto;
 
-import com.jojoldu.bns.admin.domain.Member;
-import com.jojoldu.bns.admin.domain.Role;
+import com.jojoldu.bns.core.domain.member.Member;
+import com.jojoldu.bns.core.domain.member.Role;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

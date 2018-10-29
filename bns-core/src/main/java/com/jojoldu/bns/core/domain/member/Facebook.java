@@ -1,4 +1,4 @@
-package com.jojoldu.bns.admin.domain;
+package com.jojoldu.bns.core.domain.member;
 
 /**
  * Created by jojoldu@gmail.com on 2018. 10. 28.

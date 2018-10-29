@@ -2,8 +2,8 @@ package com.jojoldu.bns.admin.config.oauth;
 
 import com.jojoldu.bns.admin.config.oauth.dto.BitlyAuthDto;
 import com.jojoldu.bns.admin.config.oauth.dto.SessionUser;
-import com.jojoldu.bns.admin.domain.Member;
-import com.jojoldu.bns.admin.domain.MemberRepository;
+import com.jojoldu.bns.core.domain.member.Member;
+import com.jojoldu.bns.core.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;

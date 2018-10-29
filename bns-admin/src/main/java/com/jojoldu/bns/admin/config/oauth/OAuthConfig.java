@@ -1,7 +1,6 @@
 package com.jojoldu.bns.admin.config.oauth;
 
-import com.jojoldu.bns.admin.domain.MemberRepository;
-import com.jojoldu.bns.admin.domain.Role;
+import com.jojoldu.bns.core.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.AuthoritiesExtractor;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
@@ -74,8 +73,8 @@ public class OAuthConfig {
         return map -> {
             String username = (String) map.get("login");
             GrantedAuthority authority = memberRepository.findByUsername(username)
-                    .map(b -> b.getRole().getAuthority())
-                    .orElse(Role.GUEST.getAuthority());
+                    .map(b -> MemberAuthority.getAuthority(b.getRole()))
+                    .orElse(MemberAuthority.GUEST_AUTHORITY);
             return singletonList(authority);
         };
     }

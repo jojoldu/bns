@@ -1,4 +1,4 @@
-package com.jojoldu.bns.admin.domain;
+package com.jojoldu.bns.core.domain.member;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

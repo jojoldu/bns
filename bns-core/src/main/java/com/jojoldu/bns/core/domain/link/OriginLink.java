@@ -7,6 +7,7 @@ package com.jojoldu.bns.core.domain.link;
  */
 
 import com.jojoldu.bns.core.domain.BaseTimeEntity;
+import com.jojoldu.bns.core.domain.member.Member;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,9 +16,12 @@ import lombok.NoArgsConstructor;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -50,6 +54,10 @@ public class OriginLink extends BaseTimeEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "originLink")
     private List<SnsLink> snsLinks = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "member_id", foreignKey = @ForeignKey(name = "fk_origin_link_member"))
+    private Member member; // 적립 대상중 어디서 차감된건지
+
     @Builder
     public OriginLink(String url, String title, String content) {
         this.url = url;
@@ -62,4 +70,7 @@ public class OriginLink extends BaseTimeEntity {
         snsLink.updateOriginLink(this);
     }
 
+    public void setMember(Member member) {
+        this.member = member;
+    }
 }

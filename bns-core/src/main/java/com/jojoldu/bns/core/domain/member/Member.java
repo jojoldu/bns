@@ -1,13 +1,25 @@
-package com.jojoldu.bns.admin.domain;
+package com.jojoldu.bns.core.domain.member;
 
 import com.jojoldu.bns.core.domain.BaseTimeEntity;
+import com.jojoldu.bns.core.domain.link.OriginLink;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.annotation.Nonnull;
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jojoldu@gmail.com on 2018. 10. 27.
@@ -50,6 +62,9 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     private Role role;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
+    private List<OriginLink> originLinks = new ArrayList<>();
+
     @Builder
     public Member(String name, String username, String email, String picture, String accessToken, boolean isActive, Role role) {
         this.name = name;
@@ -63,5 +78,10 @@ public class Member extends BaseTimeEntity {
 
     public void refreshToken(String accessToken) {
         this.accessToken = accessToken;
+    }
+
+    public void addOriginLink(OriginLink originLink) {
+        this.originLinks.add(originLink);
+        originLink.setMember(this);
     }
 }

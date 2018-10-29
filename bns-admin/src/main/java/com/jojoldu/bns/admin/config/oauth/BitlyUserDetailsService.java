@@ -1,7 +1,7 @@
 package com.jojoldu.bns.admin.config.oauth;
 
 import com.jojoldu.bns.admin.config.oauth.dto.BitlyUserDetails;
-import com.jojoldu.bns.admin.domain.MemberRepository;
+import com.jojoldu.bns.core.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
