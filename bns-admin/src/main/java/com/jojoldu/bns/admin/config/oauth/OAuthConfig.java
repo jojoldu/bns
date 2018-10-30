@@ -63,7 +63,7 @@ public class OAuthConfig {
 
     @Bean
     @ConfigurationProperties("facebook.client")
-    public AuthorizationCodeResourceDetails facebook() {
+    public AuthorizationCodeResourceDetails facebookClient() {
         return new AuthorizationCodeResourceDetails();
     }
 
