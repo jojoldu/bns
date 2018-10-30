@@ -44,3 +44,11 @@ spring:
     console.enabled: true
     console.path: /h2-console #접속 URL -> jdbc:h2:mem:bns, ID:sa, PW: (EMPTY)
     console.settings.trace: false
+server:
+  ssl:
+    enabled: true
+    key-store: keystore.p12
+    key-store-password: 123456
+    key-store-type: PKCS12
+    key-alias: bns-ssl
+  port: 8443
