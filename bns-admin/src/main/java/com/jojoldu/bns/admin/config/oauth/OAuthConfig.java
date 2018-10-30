@@ -17,11 +17,8 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilt
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
-import org.springframework.web.filter.CompositeFilter;
 
 import javax.servlet.Filter;
-import java.util.ArrayList;
-import java.util.List;
 
 import static java.util.Collections.singletonList;
 /**
@@ -41,28 +38,13 @@ public class OAuthConfig {
 
     @Bean
     public Filter ssoFilter() {
-        CompositeFilter filter = new CompositeFilter();
-        List<Filter> filters = new ArrayList<>();
-
-        OAuth2ClientAuthenticationProcessingFilter facebookFilter = new OAuth2ClientAuthenticationProcessingFilter("/login/facebook");
-        OAuth2RestTemplate facebookTemplate = new OAuth2RestTemplate(facebook(), oauth2ClientContext);
-        facebookFilter.setRestTemplate(facebookTemplate);
-        UserInfoTokenServices facebookTokenServices = new UserInfoTokenServices(facebookResource().getUserInfoUri(), facebook().getClientId());
-        facebookTokenServices.setRestTemplate(facebookTemplate);
-        facebookFilter.setTokenServices(facebookTokenServices);
-        facebookFilter.setAuthenticationSuccessHandler(customAuthenticationSuccessHandler);
-        filters.add(facebookFilter);
-
         OAuth2ClientAuthenticationProcessingFilter bitlyFilter = new OAuth2ClientAuthenticationProcessingFilter("/login");
         bitlyFilter.setRestTemplate(new OAuth2RestTemplate(bitlyClient(), oauth2ClientContext));
         UserInfoTokenServices bitlyTokenServices = new UserInfoTokenServices(bitlyResource().getUserInfoUri(), bitlyClient().getClientId());
         bitlyTokenServices.setAuthoritiesExtractor(authoritiesExtractor());
         bitlyFilter.setTokenServices(bitlyTokenServices);
         bitlyFilter.setAuthenticationSuccessHandler(customAuthenticationSuccessHandler);
-        filters.add(bitlyFilter);
-
-        filter.setFilters(filters);
-        return filter;
+        return bitlyFilter;
     }
 
     /**
