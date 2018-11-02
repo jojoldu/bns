@@ -56,7 +56,7 @@ public class OriginLink extends BaseTimeEntity {
 
     @ManyToOne
     @JoinColumn(name = "member_id", foreignKey = @ForeignKey(name = "fk_origin_link_member"))
-    private Member member; // 적립 대상중 어디서 차감된건지
+    private Member member; //
 
     @Builder
     public OriginLink(String url, String title, String content) {

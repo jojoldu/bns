@@ -5,9 +5,10 @@ bitly.yml
 facebook.yml
 aws.yml
 *.log
-bitly-token.http
+*.http
 logs
 out
+keystore.p12
 
 ### STS ###
 .apt_generated

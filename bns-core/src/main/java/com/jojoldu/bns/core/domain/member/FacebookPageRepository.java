@@ -10,6 +10,6 @@ import java.util.Optional;
  * Github : https://github.com/jojoldu
  */
 
-public interface FacebookRepository extends JpaRepository<Facebook, Long> {
-    Optional<Facebook> findByMember(Member member);
+public interface FacebookPageRepository extends JpaRepository<FacebookPage, Long> {
+    Optional<FacebookPage> findByMember(Member member);
 }

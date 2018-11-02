@@ -1,15 +1,12 @@
 package com.jojoldu.bns.admin.web;
 
-import com.jojoldu.bns.admin.web.dto.FacebookAccessToken;
+import com.jojoldu.bns.admin.aspect.LoginUser;
+import com.jojoldu.bns.admin.config.oauth.dto.SessionUser;
+import com.jojoldu.bns.admin.service.FacebookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.client.RestTemplate;
 
 /**
  * Created by jojoldu@gmail.com on 2018. 10. 31.
@@ -21,27 +18,12 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 @Controller
 public class SnsRedirectController {
-    private final RestTemplate restTemplate;
-
-    @Autowired
-    @Qualifier("facebookClient")
-    private AuthorizationCodeResourceDetails facebookClient;
+    private final FacebookService facebookService;
 
     @GetMapping("/accessToken/facebook")
-    public String getFacebookSignIn(String code) throws Exception {
-        requestAccessToken(code);
-
+    public String signInFacebook(String code, @LoginUser SessionUser sessionUser) throws Exception {
+        facebookService.saveToken(code, sessionUser.getEmail());
         return "redirect:content.html";
     }
 
-    private void requestAccessToken(String code) throws Exception {
-        String url = "https://graph.facebook.com/v3.2/oauth/access_token?" +
-                "client_id=" + facebookClient.getClientId() +
-                "&redirect_uri=" + "https://localhost:8443/content.html" +
-                "&client_secret=" + facebookClient.getClientSecret() +
-                "&code=" + code;
-
-        ResponseEntity<FacebookAccessToken> responseEntity = restTemplate.getForEntity(url, FacebookAccessToken.class);
-        log.info(responseEntity.getBody().toString());
-    }
 }

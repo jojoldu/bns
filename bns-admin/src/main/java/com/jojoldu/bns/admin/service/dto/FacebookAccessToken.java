@@ -1,5 +1,6 @@
-package com.jojoldu.bns.admin.web.dto;
+package com.jojoldu.bns.admin.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 @NoArgsConstructor
 @ToString
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class FacebookAccessToken {
 
     @JsonProperty("access_token")

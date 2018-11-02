@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.annotation.Nonnull;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -65,8 +66,11 @@ public class Member extends BaseTimeEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
     private List<OriginLink> originLinks = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
+    private List<FacebookPage> facebookPages = new ArrayList<>();
+
     @Builder
-    public Member(String name, String username, String email, String picture, String accessToken, boolean isActive, Role role) {
+    public Member(@Nonnull String name, @Nonnull String username, @Nonnull String email, String picture, String accessToken, boolean isActive, @Nonnull Role role) {
         this.name = name;
         this.username = username;
         this.email = email;
@@ -83,5 +87,16 @@ public class Member extends BaseTimeEntity {
     public void addOriginLink(OriginLink originLink) {
         this.originLinks.add(originLink);
         originLink.setMember(this);
+    }
+
+    public void addFacebookPage(List<FacebookPage> facebookPages) {
+        for (FacebookPage facebookPage : facebookPages) {
+            this.addFacebookPage(facebookPage);
+        }
+    }
+
+    public void addFacebookPage(FacebookPage facebookPage) {
+        this.facebookPages.add(facebookPage);
+        facebookPage.setMember(this);
     }
 }
