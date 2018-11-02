@@ -2,6 +2,7 @@ package com.jojoldu.bns.admin.config.oauth;
 
 import com.jojoldu.bns.admin.config.oauth.dto.BitlyAuthDto;
 import com.jojoldu.bns.admin.config.oauth.dto.SessionUser;
+import com.jojoldu.bns.admin.service.BitlyRestTemplate;
 import com.jojoldu.bns.core.domain.member.Member;
 import com.jojoldu.bns.core.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,17 +29,19 @@ public class BitlyAuthenticationSuccessHandler implements AuthenticationSuccessH
 
     private final MemberRepository memberRepository;
     private final HttpSession httpSession;
+    private final BitlyRestTemplate bitlyRestTemplate;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
         BitlyAuthDto authDto = BitlyAuthDto.of(authentication);
-        saveOrRefresh(authDto);
-        httpSession.setAttribute(SessionUser.SESSION_KEY, authDto.toSessionDto());
+        String guid = bitlyRestTemplate.getGroupGuid(authDto.getAccessToken());
+        saveOrRefresh(authDto, guid);
+        httpSession.setAttribute(SessionUser.SESSION_KEY, authDto.toSessionDto(guid));
         response.sendRedirect("/");
     }
 
-    private void saveOrRefresh(BitlyAuthDto dto) {
+    private void saveOrRefresh(BitlyAuthDto dto, String guid) {
         Optional<Member> optional = memberRepository.findByUsername(dto.getLogin());
 
         if(optional.isPresent()){
@@ -46,7 +49,7 @@ public class BitlyAuthenticationSuccessHandler implements AuthenticationSuccessH
             entity.refreshToken(dto.getAccessToken());
             memberRepository.save(entity);
         } else {
-            memberRepository.save(dto.toNewEntity());
+            memberRepository.save(dto.toNewEntity(guid));
         }
     }
 }

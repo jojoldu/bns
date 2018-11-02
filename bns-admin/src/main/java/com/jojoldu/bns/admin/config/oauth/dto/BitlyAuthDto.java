@@ -64,9 +64,10 @@ public class BitlyAuthDto {
                 .orElseGet(() -> emails.get(0).getEmail());
     }
 
-    public Member toNewEntity() {
+    public Member toNewEntity(String guid) {
         return Member.builder()
                 .accessToken(accessToken)
+                .groupGuid(guid)
                 .email(getEmail())
                 .name(name)
                 .username(login)
@@ -74,11 +75,12 @@ public class BitlyAuthDto {
                 .build();
     }
 
-    public SessionUser toSessionDto() {
+    public SessionUser toSessionDto(String guid) {
         return SessionUser.builder()
                 .accessToken(accessToken)
                 .email(getEmail())
                 .name(name)
+                .guid(guid)
                 .build();
     }
 

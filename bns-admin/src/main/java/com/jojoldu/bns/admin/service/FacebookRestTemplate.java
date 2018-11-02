@@ -1,7 +1,7 @@
 package com.jojoldu.bns.admin.service;
 
-import com.jojoldu.bns.admin.service.dto.FacebookAccessToken;
-import com.jojoldu.bns.admin.service.dto.FacebookPageAccessToken;
+import com.jojoldu.bns.admin.service.dto.facebook.FacebookAccessToken;
+import com.jojoldu.bns.admin.service.dto.facebook.FacebookPageAccessToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

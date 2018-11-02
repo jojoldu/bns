@@ -1,4 +1,4 @@
-package com.jojoldu.bns.admin.service.dto;
+package com.jojoldu.bns.admin.service.dto.facebook;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

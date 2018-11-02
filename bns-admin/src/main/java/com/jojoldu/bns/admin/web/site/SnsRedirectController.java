@@ -1,4 +1,4 @@
-package com.jojoldu.bns.admin.web;
+package com.jojoldu.bns.admin.web.site;
 
 import com.jojoldu.bns.admin.aspect.LoginUser;
 import com.jojoldu.bns.admin.config.oauth.dto.SessionUser;

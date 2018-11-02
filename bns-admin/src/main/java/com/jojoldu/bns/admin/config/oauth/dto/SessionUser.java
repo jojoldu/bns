@@ -23,11 +23,13 @@ public class SessionUser implements Serializable {
     private String accessToken;
     private String name;    // 본명
     private String email;
+    private String guid;
 
     @Builder
-    public SessionUser(@Nonnull String accessToken, @Nonnull String name, @Nonnull String email) {
+    public SessionUser(@Nonnull String accessToken, @Nonnull String name, @Nonnull String email, @Nonnull String guid) {
         this.accessToken = accessToken;
         this.name = name;
         this.email = email;
+        this.guid = guid;
     }
 }

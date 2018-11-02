@@ -1,6 +1,6 @@
 package com.jojoldu.bns.admin.service
 
-import com.jojoldu.bns.admin.service.dto.FacebookPageAccessToken
+import com.jojoldu.bns.admin.service.dto.facebook.FacebookPageAccessToken
 import com.jojoldu.bns.core.domain.member.*
 import org.springframework.beans.factory.annotation.Autowired
 

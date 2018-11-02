@@ -56,6 +56,8 @@ public class Member extends BaseTimeEntity {
 
     private String accessToken;
 
+    private String groupGuid;
+
     @Column(name = "is_active")
     private boolean isActive;
 
@@ -70,12 +72,13 @@ public class Member extends BaseTimeEntity {
     private List<FacebookPage> facebookPages = new ArrayList<>();
 
     @Builder
-    public Member(@Nonnull String name, @Nonnull String username, @Nonnull String email, String picture, String accessToken, boolean isActive, @Nonnull Role role) {
+    public Member(@Nonnull String name, @Nonnull String username, @Nonnull String email, String picture, String accessToken, String groupGuid, boolean isActive, @Nonnull Role role) {
         this.name = name;
         this.username = username;
         this.email = email;
         this.picture = picture;
         this.accessToken = accessToken;
+        this.groupGuid = groupGuid;
         this.isActive = isActive;
         this.role = role;
     }
