@@ -40,6 +40,10 @@ public class BitlyCreateResponseDto {
     private List<String> deeplinks;
     private References references;
 
+    public BitlyCreateResponseDto(String link) {
+        this.link = link;
+    }
+
     public SnsLink toSnsLink(SnsType snsType) {
         return SnsLink.builder()
                 .snsType(snsType)

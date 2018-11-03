@@ -13,10 +13,13 @@ import spock.mock.DetachedMockFactory
  */
 
 @SpringBootTest
-abstract class SpringMockTest extends Specification {
+abstract class SpringMockAdminTest extends Specification {
 
     @MockBean
     FacebookRestTemplate facebookRestTemplate
+
+    @MockBean
+    BitlyRestTemplate bitlyRestTemplate
 
     @TestConfiguration
     static class SpockMockConfiguration {

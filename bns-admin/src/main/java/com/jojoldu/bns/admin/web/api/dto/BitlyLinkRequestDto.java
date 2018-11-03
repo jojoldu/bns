@@ -3,6 +3,7 @@ package com.jojoldu.bns.admin.web.api.dto;
 import com.jojoldu.bns.admin.service.dto.bitly.BitlyLinkExchangeDto;
 import com.jojoldu.bns.core.domain.link.OriginLink;
 import com.jojoldu.bns.core.domain.link.SnsType;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,6 +28,14 @@ public class BitlyLinkRequestDto {
     private String content;
     private String link;
     private List<SnsType> snsTypes = new ArrayList<>();
+
+    @Builder
+    public BitlyLinkRequestDto(String title, String content, String link, List<SnsType> snsTypes) {
+        this.title = title;
+        this.content = content;
+        this.link = link;
+        this.snsTypes = snsTypes;
+    }
 
     public List<BitlyLinkExchangeDto> toExchangeDtoList(String groupGuid) {
         return snsTypes.stream()

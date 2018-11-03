@@ -65,6 +65,12 @@ public class OriginLink extends BaseTimeEntity {
         this.content = content;
     }
 
+    public void addSnsLinks(List<SnsLink> snsLinks) {
+        for (SnsLink snsLink : snsLinks) {
+            addSnsLink(snsLink);
+        }
+    }
+
     public void addSnsLink(SnsLink snsLink) {
         this.snsLinks.add(snsLink);
         snsLink.updateOriginLink(this);

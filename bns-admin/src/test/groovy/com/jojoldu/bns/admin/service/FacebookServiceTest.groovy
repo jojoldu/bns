@@ -14,7 +14,7 @@ import static org.mockito.BDDMockito.given
  * Github : https://github.com/jojoldu
  */
 
-class FacebookServiceTest extends SpringMockTest {
+class FacebookServiceTest extends SpringMockAdminTest {
 
     @Autowired
     MemberRepository memberRepository
