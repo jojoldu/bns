@@ -1,6 +1,7 @@
 package com.jojoldu.bns.admin.web.api.dto;
 
 import com.jojoldu.bns.admin.service.dto.bitly.BitlyLinkExchangeDto;
+import com.jojoldu.bns.core.domain.link.OriginLink;
 import com.jojoldu.bns.core.domain.link.SnsType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,7 +35,17 @@ public class BitlyLinkRequestDto {
                         .longUrl(link)
                         .title(title)
                         .tags(Collections.singletonList(s.name()))
+                        .snsType(s)
                         .build())
                 .collect(Collectors.toList());
     }
+
+    public OriginLink toOriginLink() {
+        return OriginLink.builder()
+                .title(title)
+                .content(content)
+                .link(link)
+                .build();
+    }
+
 }

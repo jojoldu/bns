@@ -33,7 +33,7 @@ import java.util.List;
 @Entity
 @Table(
         uniqueConstraints = {
-                @UniqueConstraint(name = "uni_origin_link_url", columnNames = {"url"})
+                @UniqueConstraint(name = "uni_origin_link_link", columnNames = {"link"})
         }
 )
 public class OriginLink extends BaseTimeEntity {
@@ -43,7 +43,7 @@ public class OriginLink extends BaseTimeEntity {
     private Long id;
 
     @Column(nullable = false)
-    private String url;
+    private String link;
 
     @Column(nullable = false, length = 80)
     private String title;
@@ -59,8 +59,8 @@ public class OriginLink extends BaseTimeEntity {
     private Member member; //
 
     @Builder
-    public OriginLink(String url, String title, String content) {
-        this.url = url;
+    public OriginLink(String link, String title, String content) {
+        this.link = link;
         this.title = title;
         this.content = content;
     }

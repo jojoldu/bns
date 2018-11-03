@@ -1,6 +1,8 @@
 package com.jojoldu.bns.admin.service.dto.bitly;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.jojoldu.bns.core.domain.link.SnsType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,12 +31,16 @@ public class BitlyLinkExchangeDto {
     private String title;
     private List<String> tags = new ArrayList<>();
 
+    @JsonIgnore
+    private SnsType snsType;
+
     @Builder
-    public BitlyLinkExchangeDto(String groupGuid, String longUrl, String title, List<String> tags) {
+    public BitlyLinkExchangeDto(String groupGuid, String longUrl, String title, List<String> tags, SnsType snsType) {
         this.groupGuid = groupGuid;
         this.domain = "bit.ly";
         this.longUrl = longUrl;
         this.title = title;
         this.tags = tags;
+        this.snsType = snsType;
     }
 }

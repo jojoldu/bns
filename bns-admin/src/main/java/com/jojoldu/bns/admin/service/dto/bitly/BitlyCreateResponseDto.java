@@ -2,6 +2,8 @@ package com.jojoldu.bns.admin.service.dto.bitly;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.jojoldu.bns.core.domain.link.SnsLink;
+import com.jojoldu.bns.core.domain.link.SnsType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,6 +39,13 @@ public class BitlyCreateResponseDto {
     private List<String> tags;
     private List<String> deeplinks;
     private References references;
+
+    public SnsLink toSnsLink(SnsType snsType) {
+        return SnsLink.builder()
+                .snsType(snsType)
+                .link(link)
+                .build();
+    }
 
     @Getter
     @Setter

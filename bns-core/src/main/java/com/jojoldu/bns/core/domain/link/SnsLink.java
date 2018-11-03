@@ -30,7 +30,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(
         uniqueConstraints = {
-                @UniqueConstraint(name = "uni_sns_link_url", columnNames = {"url"})
+                @UniqueConstraint(name = "uni_sns_link_link", columnNames = {"link"})
         }
 )
 public class SnsLink extends BaseTimeEntity {
@@ -40,7 +40,7 @@ public class SnsLink extends BaseTimeEntity {
     private Long id;
 
     @Column(nullable = false)
-    private String url;
+    private String link;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
@@ -49,12 +49,12 @@ public class SnsLink extends BaseTimeEntity {
     private long clickCount;
 
     @ManyToOne
-    @JoinColumn(name = "origin_link_id", foreignKey = @ForeignKey(name = "fk_bitly_origin_link"))
+    @JoinColumn(name = "origin_link_id", foreignKey = @ForeignKey(name = "fk_sns_link_origin_link"))
     private OriginLink originLink; // 원본 링크
 
     @Builder
-    public SnsLink(String url, SnsType snsType) {
-        this.url = url;
+    public SnsLink(String link, SnsType snsType) {
+        this.link = link;
         this.snsType = snsType;
         this.clickCount = 0;
     }
