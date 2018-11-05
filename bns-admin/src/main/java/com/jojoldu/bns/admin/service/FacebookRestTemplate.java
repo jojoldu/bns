@@ -59,4 +59,18 @@ public class FacebookRestTemplate {
             throw new IllegalArgumentException("Request Facebook Page Access Token", e);
         }
     }
+
+    public String postFeed(String pageId, String accessToken, String message) {
+        String url = String.format("https://graph.facebook.com/v3.2/%s/feed?access_token=%s&message=%s", pageId, accessToken, message);
+
+        try {
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+
+            return responseEntity.getBody();
+        } catch (Exception e) {
+            log.error(((HttpClientErrorException) e).getResponseBodyAsString());
+            log.error("Request Facebook Page Post", e.getCause());
+            throw new IllegalArgumentException("Request Facebook Page Post", e);
+        }
+    }
 }

@@ -32,5 +32,9 @@ public class FacebookService {
         member.addFacebookPage(pageAccessToken.toEntities());
     }
 
+    @Transactional
+    public void post(String pageId, String accessToken, String message) {
+        facebookRestTemplate.postFeed(pageId, accessToken, message);
+    }
 
 }
