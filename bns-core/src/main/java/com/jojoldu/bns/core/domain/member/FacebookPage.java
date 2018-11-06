@@ -21,10 +21,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uni_facebook_page_page_id", columnNames = {"pageId"})
+        }
+)
 public class FacebookPage extends BaseTimeEntity {
 
     @Id
@@ -33,6 +40,8 @@ public class FacebookPage extends BaseTimeEntity {
 
     private String accessToken;
     private String pageName;
+
+    @Column(nullable = false)
     private String pageId;
     private String category;
 

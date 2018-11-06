@@ -48,6 +48,8 @@ public class SnsLink extends BaseTimeEntity {
 
     private long clickCount;
 
+    private boolean isSent;
+
     @ManyToOne
     @JoinColumn(name = "origin_link_id", foreignKey = @ForeignKey(name = "fk_sns_link_origin_link"))
     private OriginLink originLink; // 원본 링크
@@ -57,9 +59,22 @@ public class SnsLink extends BaseTimeEntity {
         this.link = link;
         this.snsType = snsType;
         this.clickCount = 0;
+        this.isSent = false;
     }
 
     public void updateOriginLink(OriginLink originLink) {
         this.originLink = originLink;
+    }
+
+    public void send() {
+        this.isSent = true;
+    }
+
+    public boolean equalsType(SnsType snsType) {
+        return this.snsType == snsType;
+    }
+
+    public String getMessage() {
+        return String.format("%s \n %s", originLink.getContent(), link);
     }
 }

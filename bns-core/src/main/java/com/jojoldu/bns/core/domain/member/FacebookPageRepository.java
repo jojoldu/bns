@@ -12,4 +12,6 @@ import java.util.Optional;
 
 public interface FacebookPageRepository extends JpaRepository<FacebookPage, Long> {
     Optional<FacebookPage> findByMember(Member member);
+
+    Optional<FacebookPage> findByPageId(String pageId);
 }

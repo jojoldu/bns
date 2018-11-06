@@ -79,4 +79,11 @@ public class OriginLink extends BaseTimeEntity {
     public void setMember(Member member) {
         this.member = member;
     }
+
+    public SnsLink findSnsLink(SnsType snsType) {
+        return snsLinks.stream()
+                .filter(s -> s.equalsType(snsType))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 SNS 타입을 찾고 있습니다. snsType=" + snsType));
+    }
 }
