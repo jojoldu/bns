@@ -1,7 +1,7 @@
 package com.jojoldu.bns.admin.service
 
 import com.jojoldu.bns.admin.service.dto.bitly.BitlyCreateResponseDto
-import com.jojoldu.bns.admin.web.api.dto.BitlyLinkRequestDto
+import com.jojoldu.bns.admin.service.dto.bitly.BitlyLinkRequestDto
 import com.jojoldu.bns.core.domain.link.OriginLinkRepository
 import com.jojoldu.bns.core.domain.link.SnsLinkRepository
 import com.jojoldu.bns.core.domain.link.SnsType

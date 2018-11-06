@@ -1,6 +1,5 @@
-package com.jojoldu.bns.admin.web.api.dto;
+package com.jojoldu.bns.admin.service.dto.bitly;
 
-import com.jojoldu.bns.admin.service.dto.bitly.BitlyLinkExchangeDto;
 import com.jojoldu.bns.core.domain.link.OriginLink;
 import com.jojoldu.bns.core.domain.link.SnsType;
 import lombok.Builder;
@@ -42,7 +41,7 @@ public class BitlyLinkRequestDto {
                 .map(s -> BitlyLinkExchangeDto.builder()
                         .groupGuid(groupGuid)
                         .longUrl(link)
-                        .title(title)
+                        .title(String.format("[%s] %s", s.getTitle(), title))
                         .tags(Collections.singletonList(s.name()))
                         .snsType(s)
                         .build())

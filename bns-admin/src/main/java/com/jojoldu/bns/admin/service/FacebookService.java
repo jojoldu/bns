@@ -2,12 +2,17 @@ package com.jojoldu.bns.admin.service;
 
 import com.jojoldu.bns.admin.service.dto.facebook.FacebookAccessToken;
 import com.jojoldu.bns.admin.service.dto.facebook.FacebookPageAccessToken;
+import com.jojoldu.bns.core.domain.link.SnsLink;
+import com.jojoldu.bns.core.domain.member.FacebookPage;
+import com.jojoldu.bns.core.domain.member.FacebookPageRepository;
 import com.jojoldu.bns.core.domain.member.Member;
 import com.jojoldu.bns.core.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Created by jojoldu@gmail.com on 2018. 11. 2.
@@ -22,6 +27,7 @@ public class FacebookService {
 
     private final MemberRepository memberRepository;
     private final FacebookRestTemplate facebookRestTemplate;
+    private final FacebookPageRepository facebookPageRepository;
 
     @Transactional
     public void saveToken(String code, String email) {
@@ -33,8 +39,21 @@ public class FacebookService {
     }
 
     @Transactional
+    public void sendAll(SnsLink facebookLink, List<String> facebookPageIds) {
+        for (String pageId : facebookPageIds) {
+            FacebookPage facebookPage = getFacebookPage(pageId);
+            post(pageId, facebookPage.getAccessToken(), facebookLink.getMessage());
+        }
+        facebookLink.send();
+    }
+
+    @Transactional
     public void post(String pageId, String accessToken, String message) {
         facebookRestTemplate.postFeed(pageId, accessToken, message);
     }
 
+    FacebookPage getFacebookPage(String pageId) {
+        return facebookPageRepository.findByPageId(pageId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Facebook Page입니다. pageId=" + pageId));
+    }
 }
