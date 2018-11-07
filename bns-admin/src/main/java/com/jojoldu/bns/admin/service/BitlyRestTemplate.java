@@ -52,7 +52,7 @@ public class BitlyRestTemplate {
     HttpHeaders createAuthHeaders(String accessToken) {
         HttpHeaders httpHeaders = new HttpHeaders() {
         };
-        httpHeaders.set("Authorization", "Basic " + accessToken);
+        httpHeaders.set("Authorization", "Bearer " + accessToken);
         return httpHeaders;
     }
 }

@@ -23,7 +23,7 @@ public class SnsRedirectController {
     @GetMapping("/accessToken/facebook")
     public String signInFacebook(String code, @LoginUser SessionUser sessionUser) throws Exception {
         facebookService.saveToken(code, sessionUser.getEmail());
-        return "redirect:content.html";
+        return "redirect:/content.html";
     }
 
 }

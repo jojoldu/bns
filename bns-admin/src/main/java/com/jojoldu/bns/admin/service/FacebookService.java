@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ public class FacebookService {
     private final FacebookPageRepository facebookPageRepository;
 
     @Transactional
-    public void saveToken(String code, String email) {
+    public void saveToken(@Nonnull String code, @Nonnull String email) {
         FacebookAccessToken accessToken = facebookRestTemplate.requestAccessToken(code);
         FacebookPageAccessToken pageAccessToken = facebookRestTemplate.exchangePageToken(accessToken);
         Member member = memberRepository.findByEmail(email)

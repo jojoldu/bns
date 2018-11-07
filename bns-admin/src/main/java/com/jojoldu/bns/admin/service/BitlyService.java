@@ -31,7 +31,6 @@ public class BitlyService {
     private final OriginLinkRepository originLinkRepository;
     private final FacebookService facebookService;
 
-
     @Transactional
     public List<String> createBitlyLink(BitlyLinkRequestDto requestDto, String guid, String accessToken, String email) {
         OriginLink originLink = requestDto.toOriginLink();
