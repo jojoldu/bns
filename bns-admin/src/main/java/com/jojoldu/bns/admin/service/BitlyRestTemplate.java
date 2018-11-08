@@ -25,6 +25,7 @@ import java.util.Objects;
 @Component
 public class BitlyRestTemplate {
     private static final String GROUP_URL = "https://api-ssl.Bitly.com/v4/groups";
+    private static final String CREATE_URL = "https://api-ssl.bitly.com/v4/bitlinks";
     private final RestTemplate restTemplate;
 
     public String getGroupGuid(String accessToken) {
@@ -41,7 +42,7 @@ public class BitlyRestTemplate {
     public BitlyCreateResponseDto create(String accessToken, BitlyLinkExchangeDto dto) {
         HttpEntity<BitlyLinkExchangeDto> request = new HttpEntity<>(dto, createAuthHeaders(accessToken));
         try {
-            ResponseEntity<BitlyCreateResponseDto> response = restTemplate.exchange(GROUP_URL, HttpMethod.POST, request, BitlyCreateResponseDto.class);
+            ResponseEntity<BitlyCreateResponseDto> response = restTemplate.exchange(CREATE_URL, HttpMethod.POST, request, BitlyCreateResponseDto.class);
             return response.getBody();
         } catch (Exception e) {
             log.error("Bitly 링크 생성이 실패했습니다. requestDto={}, message={}", dto, e.getMessage(), e);
@@ -53,6 +54,8 @@ public class BitlyRestTemplate {
         HttpHeaders httpHeaders = new HttpHeaders() {
         };
         httpHeaders.set("Authorization", "Bearer " + accessToken);
+        httpHeaders.set("Content-Type", "application/json");
+
         return httpHeaders;
     }
 }

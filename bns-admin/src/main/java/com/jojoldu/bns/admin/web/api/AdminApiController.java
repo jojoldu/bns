@@ -10,6 +10,7 @@ import com.jojoldu.bns.admin.web.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -25,7 +26,7 @@ public class AdminApiController {
     private final BitlyService bitlyService;
 
     @PostMapping("/admin/v1/bitly")
-    public ResponseDto<String> createBitly(BitlyLinkRequestDto requestDto, @LoginUser SessionUser sessionUser) {
+    public ResponseDto<String> createBitly(@RequestBody BitlyLinkRequestDto requestDto, @LoginUser SessionUser sessionUser) {
         try {
             bitlyService.createBitlyLink(requestDto, sessionUser.getGuid(), sessionUser.getAccessToken(), sessionUser.getEmail());
         } catch (Exception e) {
@@ -35,7 +36,7 @@ public class AdminApiController {
     }
 
     @PostMapping("/admin/v1/send/sns")
-    public ResponseDto<String> sendSnsAll(SendSnsRequestDto requestDto, @LoginUser SessionUser sessionUser) {
+    public ResponseDto<String> sendSnsAll(@RequestBody SendSnsRequestDto requestDto, @LoginUser SessionUser sessionUser) {
         try {
             bitlyService.sendAll(requestDto, sessionUser.getEmail());
         } catch (Exception e) {

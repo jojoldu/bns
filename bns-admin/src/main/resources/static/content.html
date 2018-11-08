@@ -11,10 +11,50 @@
         <a class="btn btn-primary" type="submit" role="button" href="
         https://www.facebook.com/v3.2/dialog/oauth?client_id=2233315560283356&redirect_uri=https://localhost:8443/accessToken/facebook&scope=manage_pages,publish_pages">Facebook</a>
 
-        <a class="btn btn-default" type="submit" role="button" href="">Post Facebook</a>
+        <form id="bitly">
+            <input type="text" id="title">
+            <input type="text" id="content">
+            <input type="text" id="link">
+        </form>
+        <button class="btn btn-default" id="sendBitly">Post Facebook</button>
     </div>
 </div>
 
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+</script>
+
+<script type="application/javascript">
+    function createBitly() {
+        var title = $('#title').val();
+        var content = $('#content').val();
+        var link = $('#link').val();
+
+        var data = {
+            title: title,
+            content: content,
+            link: link,
+            snsTypes: ['FACEBOOK']
+        };
+
+        function success(data) {
+            alert("Data Loaded: " + data);
+        }
+
+        $.ajax({
+            url: "/admin/v1/bitly",
+            type: 'post',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: 'application/json',
+            success: success
+        });
+    }
+
+    $('#sendBitly').on('click', createBitly);
+</script>
 
 </body>
 </html>
