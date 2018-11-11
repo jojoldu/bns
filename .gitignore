@@ -10,7 +10,7 @@ telegram.yml
 logs
 out
 keystore.p12
-/node_modules
+node_modules
 
 ### STS ###
 .apt_generated

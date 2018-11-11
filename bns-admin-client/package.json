@@ -1,0 +1,56 @@
+{
+  "name": "bns-admin-client",
+  "version": "1.0.0",
+  "description": "bitly and sns admin client",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm test",
+    "local-build": "babel src/js -w -d dist/js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jojoldu/bns.git"
+  },
+  "keywords": [
+    "bitly",
+    "facebook",
+    "telegram",
+    "vue"
+  ],
+  "author": "jojoldu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jojoldu/bns/issues"
+  },
+  "homepage": "https://github.com/jojoldu/bns#readme",
+  "engines": {
+    "node": "~10.13.0",
+    "npm": "~6.4.1"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.0.0",
+    "axios": "^0.18.0",
+    "lodash": "^4.17.11",
+    "vue": "^2.5.17"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.5",
+    "@babel/preset-env": "^7.1.5",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.4",
+    "css-loader": "^1.0.1",
+    "eslint": "^5.9.0",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "file-loader": "^2.0.0",
+    "mini-css-extract-plugin": "^0.4.4",
+    "style-loader": "^0.23.1",
+    "uglifyjs-webpack-plugin": "^2.0.1",
+    "url-loader": "^1.1.2",
+    "vue-loader": "^15.4.2",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10",
+    "webpack-merge": "^4.1.4"
+  }
+}
