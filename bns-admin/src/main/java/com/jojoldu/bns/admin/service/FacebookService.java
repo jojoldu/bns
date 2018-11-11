@@ -42,7 +42,7 @@ public class FacebookService {
     @Transactional
     public void sendAll(SnsLink facebookLink, List<String> facebookPageIds) {
         for (String pageId : facebookPageIds) {
-            FacebookPage facebookPage = getFacebookPage(pageId);
+            FacebookPage facebookPage = findFacebookPage(pageId);
             post(pageId, facebookPage.getAccessToken(), facebookLink.getMessage());
         }
         facebookLink.send();
@@ -53,7 +53,7 @@ public class FacebookService {
         facebookRestTemplate.postFeed(pageId, accessToken, message);
     }
 
-    FacebookPage getFacebookPage(String pageId) {
+    FacebookPage findFacebookPage(String pageId) {
         return facebookPageRepository.findByPageId(pageId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Facebook Page입니다. pageId=" + pageId));
     }

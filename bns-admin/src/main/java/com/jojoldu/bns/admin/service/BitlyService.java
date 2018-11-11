@@ -30,6 +30,7 @@ public class BitlyService {
     private final MemberRepository memberRepository;
     private final OriginLinkRepository originLinkRepository;
     private final FacebookService facebookService;
+    private final TelegramService telegramService;
 
     @Transactional
     public List<String> createBitlyLink(BitlyLinkRequestDto requestDto, String guid, String accessToken, String email) {
@@ -51,16 +52,21 @@ public class BitlyService {
          * 3. 각 SNS restTemplate로 메세지 발송
          */
 
-        Member member = getMember(email);
         OriginLink originLink = getOriginLink(requestDto);
         sendAllFacebook(requestDto, originLink);
-
+        sendAllTelegram(requestDto, originLink);
     }
 
     void sendAllFacebook(SendSnsRequestDto requestDto, OriginLink originLink) {
         SnsLink facebookLink = originLink.findSnsLink(SnsType.FACEBOOK);
         List<String> facebookPageIds = requestDto.getFacebookPageIds();
         facebookService.sendAll(facebookLink, facebookPageIds);
+    }
+
+    void sendAllTelegram(SendSnsRequestDto requestDto, OriginLink originLink) {
+        SnsLink telegramLink = originLink.findSnsLink(SnsType.TELEGRAM);
+        List<Long> telegramIds = requestDto.getTelegramIds();
+        telegramService.sendAll(telegramLink, telegramIds);
     }
 
     OriginLink getOriginLink(SendSnsRequestDto requestDto) {

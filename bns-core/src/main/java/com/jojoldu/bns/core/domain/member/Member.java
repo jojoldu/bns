@@ -71,6 +71,9 @@ public class Member extends BaseTimeEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
     private List<FacebookPage> facebookPages = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
+    public List<Telegram> telegrams = new ArrayList<>();
+
     @Builder
     public Member(@Nonnull String name, @Nonnull String username, @Nonnull String email, String picture, String accessToken, String groupGuid, boolean isActive, @Nonnull Role role) {
         this.name = name;
@@ -101,5 +104,16 @@ public class Member extends BaseTimeEntity {
     public void addFacebookPage(FacebookPage facebookPage) {
         this.facebookPages.add(facebookPage);
         facebookPage.setMember(this);
+    }
+
+    public void addTelegram(List<Telegram> telegrams) {
+        for (Telegram telegram : telegrams) {
+            this.addTelegram(telegram);
+        }
+    }
+
+    public void addTelegram(Telegram telegram) {
+        this.telegrams.add(telegram);
+        telegram.setMember(this);
     }
 }

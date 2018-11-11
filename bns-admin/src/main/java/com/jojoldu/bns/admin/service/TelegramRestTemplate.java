@@ -1,6 +1,6 @@
 package com.jojoldu.bns.admin.service;
 
-import com.jojoldu.bns.admin.config.oauth.dto.TelegramProperties;
+import com.jojoldu.bns.admin.service.dto.telegram.TelegramReponseDto;
 import com.jojoldu.bns.admin.service.dto.telegram.TelegramRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,17 +23,16 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class TelegramRestTemplate {
     private final RestTemplate restTemplate;
-    private final TelegramProperties telegramProperties;
 
-    public String sendAll(TelegramRequestDto requestDto) {
-        HttpEntity<TelegramRequestDto> request = new HttpEntity<>(requestDto, createAuthHeaders(telegramProperties.getApiKey()));
+    public TelegramReponseDto send(String url, String apiKey, TelegramRequestDto requestDto) {
+        HttpEntity<TelegramRequestDto> request = new HttpEntity<>(requestDto, createAuthHeaders(apiKey));
         try {
-            ResponseEntity<String> responseEntity = restTemplate.exchange(telegramProperties.getUrl(), HttpMethod.POST, request, String.class);
+            ResponseEntity<TelegramReponseDto> responseEntity = restTemplate.exchange(url, HttpMethod.POST, request, TelegramReponseDto.class);
             return responseEntity.getBody();
         } catch (Exception e) {
             log.error(((HttpClientErrorException) e).getResponseBodyAsString());
-            log.error("Request Telegram Send All", e);
-            throw new IllegalArgumentException("Request Telegram Send All", e);
+            log.error("Request Telegram Send", e);
+            throw new IllegalArgumentException("Request Telegram Send", e);
         }
     }
 

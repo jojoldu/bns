@@ -28,33 +28,32 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(
         uniqueConstraints = {
-                @UniqueConstraint(name = "uni_telegram_bot_link", columnNames = {"link"})
+                @UniqueConstraint(name = "uni_telegram_link", columnNames = {"link"})
         }
 )
-public class TelegramBot extends BaseTimeEntity {
+public class Telegram extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String token;
-    private String link;
     private String name;
+    private String link;
+    private String apiKey;
 
     @Column(name = "is_default")
     private boolean isDefault;
 
     @ManyToOne
-    @JoinColumn(name = "member_id", foreignKey = @ForeignKey(name = "fk_telegram_bot_member"))
+    @JoinColumn(name = "member_id", foreignKey = @ForeignKey(name = "fk_telegram_member"))
     private Member member;
 
     @Builder
-    public TelegramBot(String token, String link, String name, boolean isDefault, Member member) {
-        this.token = token;
-        this.link = link;
+    public Telegram(String name, String link, String apiKey) {
         this.name = name;
-        this.isDefault = isDefault;
-        this.member = member;
+        this.link = link;
+        this.apiKey = apiKey;
+        this.isDefault = false;
     }
 
     public void setMember(Member member) {

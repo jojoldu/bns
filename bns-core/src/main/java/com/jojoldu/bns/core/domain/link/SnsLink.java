@@ -74,6 +74,9 @@ public class SnsLink extends BaseTimeEntity {
         return this.snsType == snsType;
     }
 
+    /**
+     * bitly로 전환된 링크와 본문이 포함된 메세지 생성
+     */
     public String getMessage() {
         return String.format("%s \n %s", originLink.getContent(), link);
     }

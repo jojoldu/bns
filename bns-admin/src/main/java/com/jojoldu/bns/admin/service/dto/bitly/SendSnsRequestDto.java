@@ -24,7 +24,7 @@ import java.util.List;
 public class SendSnsRequestDto {
     private Long originLinkId;
     private Facebook facebook;
-
+    private Telegram telegram;
 
     public List<String> getFacebookPageIds() {
         if (facebook == null) {
@@ -34,12 +34,28 @@ public class SendSnsRequestDto {
         return this.facebook.getPageIds();
     }
 
+    public List<Long> getTelegramIds() {
+        if (telegram == null) {
+            return Collections.emptyList();
+        }
+
+        return this.telegram.getIds();
+    }
+
     @ToString
     @Getter
     @Setter
     @NoArgsConstructor
     public static class Facebook {
         private List<String> pageIds = new ArrayList<>();
+    }
+
+    @ToString
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static class Telegram {
+        private List<Long> ids = new ArrayList<>();
     }
 
 }

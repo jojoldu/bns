@@ -1,6 +1,5 @@
 package com.jojoldu.bns.admin.config.oauth;
 
-import com.jojoldu.bns.admin.config.oauth.dto.TelegramProperties;
 import com.jojoldu.bns.core.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.AuthoritiesExtractor;
@@ -84,12 +83,6 @@ public class OAuthConfig {
     @ConfigurationProperties("bitly.resource")
     public ResourceServerProperties bitlyResource() {
         return new ResourceServerProperties();
-    }
-
-    @Bean
-    @ConfigurationProperties("telegram")
-    public TelegramProperties telegramProperties() {
-        return new TelegramProperties();
     }
 
     @Bean
