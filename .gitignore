@@ -4,6 +4,7 @@
 bitly.yml
 facebook.yml
 aws.yml
+telegram.yml
 *.log
 *.http
 logs

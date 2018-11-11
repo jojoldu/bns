@@ -37,7 +37,7 @@ exports.handler = async (event) => {
         return err;
     }
 
-    return totalItem;
+    return {totalCount: totalItem.length};
 };
 
 function getChatIdAll() {
@@ -48,14 +48,14 @@ async function sendAll(requestText, items) {
     console.log("총 발송인원: " + items.length);
     console.log(JSON.stringify(items));
 
-    items.forEach(subscriber => {
+    items.forEach(async subscriber => {
         const postData = {
             //"chat_id": subscriber['chat_id'],
             "chat_id": MY_CHAT_ID,
             "text": createText(requestText)
         };
 
-        sendMessage(postData);
+        await sendMessage(postData);
     });
 }
 
@@ -87,6 +87,7 @@ function sendMessage(postData) {
             reject(e.message);
         });
 
+        console.log('전송 chatId=', postData['chat_id']);
         req.write(util.format("%j", postData));
         req.end();
     });
