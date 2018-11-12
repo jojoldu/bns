@@ -2,11 +2,16 @@ const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const webpackMerge = require('webpack-merge');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
-    entry: {
-        // babel 7
-        entry: ['@babel/polyfill', './src/js/entry.js']
+    // babel 7
+    entry: ['./src/main.js'],
+    output: {
+        path: path.resolve(__dirname, './dist'),
+        publicPath: '/dist/',
+        filename: 'build.js'
     },
     module: {
         rules: [
@@ -20,59 +25,50 @@ const config = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                use: [{
-                    loader: 'babel-loader',
-                    options: {
-                        presets: [
-                            ['@babel/preset-env']
-                        ]
-                    }
-                }]
+                loader: 'babel-loader'
             },
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: "css-loader",
-                })
+                use: [
+                    'vue-style-loader',
+                    'css-loader'
+                ]
             },
             {
-                test: /\.(jpe?g|png|gif|svg)$/,
-                loader: 'url-loader',
-                options: {
-                    publicPath: '/static/',
-                    name: 'images/[name].[ext]',
-                    limit: 1
-                }
-            },
-            {
-                test: /\.ico$/,
+                test: /\.(png|jpg|gif|svg)$/,
                 loader: 'file-loader',
                 options: {
-                    publicPath: '/static/',
-                    name: 'icons/[name].[ext]',
-                    limit: 1
-                }
-            },
-            {
-                test: /\.(eot|svg|ttf|woff|woff2)$/,
-                loader: 'url-loader',
-                options: {
-                    publicPath: '/static/',
-                    name: 'fonts/[name].[ext]',
-                    limit: 1
+                    name: '[name].[ext]?[hash]'
                 }
             }
         ]
+    },
+    resolve: {
+        alias: {
+            'vue$': 'vue/dist/vue.esm.js'
+        },
+        extensions: ['*', '.js', '.vue', '.json']
     },
     plugins: [
         new webpack.ProvidePlugin({
             _: "lodash"
         }),
-        new ExtractTextPlugin('css/[name].css')
+        new ExtractTextPlugin('css/[name].css'),
+        new VueLoaderPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
+        new HtmlWebpackPlugin({
+            template: 'index.html',
+            filename: 'index.html',
+            inject: true
+        })
     ]
 };
 
-module.exports = function (env) {
-    return webpackMerge(config, require(`./webpack.${env}.js`));
+module.exports = function () {
+    if (process.env.NODE_ENV === 'production') {
+        return webpackMerge(config, require(`./webpack.prod.js`));
+    } else {
+        return webpackMerge(config, require(`./webpack.dev.js`));
+    }
 };
+

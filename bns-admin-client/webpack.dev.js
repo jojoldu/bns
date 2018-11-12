@@ -4,3 +4,20 @@
  * Github : http://github.com/jojoldu
  */
 
+const webpack = require('webpack');
+
+module.exports = {
+    devtool: 'inline-source-map',
+    devServer: {
+        https: true,
+        historyApiFallback: true,
+        publicPath: '/static/',
+        port: 3000,
+        // proxy: {
+        //     "**": "http://localhost:9200"
+        // }
+    },
+    plugins: [
+        new webpack.NamedModulesPlugin()
+    ]
+};
