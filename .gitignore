@@ -11,6 +11,9 @@ logs
 out
 keystore.p12
 node_modules
+dist
+npm-debug.log
+yarn-error.log
 
 ### STS ###
 .apt_generated
