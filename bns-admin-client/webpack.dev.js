@@ -7,17 +7,19 @@
 const webpack = require('webpack');
 
 module.exports = {
+    mode: 'development',
     devtool: 'inline-source-map',
     devServer: {
         https: true,
+        hot: true,
         historyApiFallback: true,
-        publicPath: '/static/',
+        publicPath: '/',
         port: 3000,
         // proxy: {
         //     "**": "http://localhost:9200"
         // }
     },
     plugins: [
-        new webpack.NamedModulesPlugin()
+        new webpack.HotModuleReplacementPlugin()
     ]
 };

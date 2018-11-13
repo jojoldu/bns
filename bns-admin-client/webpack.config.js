@@ -1,3 +1,5 @@
+'use strict'
+
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -8,11 +10,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const config = {
     // babel 7
     entry: ['./src/main.js'],
-    output: {
-        path: path.resolve(__dirname, './dist'),
-        publicPath: '/dist/',
-        filename: 'build.js'
-    },
     module: {
         rules: [
             {
@@ -50,12 +47,8 @@ const config = {
         extensions: ['*', '.js', '.vue', '.json']
     },
     plugins: [
-        new webpack.ProvidePlugin({
-            _: "lodash"
-        }),
         new ExtractTextPlugin('css/[name].css'),
         new VueLoaderPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
             template: 'index.html',
             filename: 'index.html',
