@@ -8,6 +8,9 @@ const webpack = require('webpack');
 
 module.exports = {
     mode: 'development',
+    output: {
+        publicPath: '/',
+    },
     devtool: 'inline-source-map',
     devServer: {
         https: true,

@@ -9,7 +9,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
     // babel 7
-    entry: ['./src/main.js'],
+    entry: [path.resolve(__dirname, 'src/main.js')],
     module: {
         rules: [
             {
