@@ -11,7 +11,7 @@ module.exports = {
     output: {
         publicPath: '/',
     },
-    devtool: 'inline-source-map',
+    devtool: 'cheap-module-eval-source-map',
     devServer: {
         https: true,
         hot: true,

@@ -7,9 +7,15 @@
 import Vue from 'vue'
 import router from './router' // index.js는 상위 디렉토리 지정시 디폴트값
 import App from './App.vue'
+import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+Vue.use(router);
+Vue.use(BootstrapVue);
 
 new Vue({
     el: '#app',
-    router,
-    render: h => h(App)
+    components: {App},
+    template: '<App/>'
 });
